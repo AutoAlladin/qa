@@ -67,8 +67,8 @@ namespace Alladin
             IWebElement AddItemButton = bigWait.Until<IWebElement>(d => d.FindElement(By.XPath("//*[contains(@id,'add_procurement_subject')]")));
             Assert.Pass("URL: "+chd.Url);
 
-            ItemsNew r = new ItemsNew();
-            r.AddNewTenderItem();
+           // ItemsNew r = new ItemsNew();
+           // r.AddNewTenderItem();
 
 
         }
