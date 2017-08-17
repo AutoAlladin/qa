@@ -7,7 +7,7 @@ using UnitTestProject1.Pages;
 
 namespace Alladin
 {
-    
+
     public class UnitTest1
     {
         ChromeDriver chd;
@@ -45,8 +45,8 @@ namespace Alladin
             {
                 apchh.Quit();
             }
-            
-            
+
+
 
 
         }
@@ -58,18 +58,23 @@ namespace Alladin
             chd.Manage().Window.Size = new System.Drawing.Size(1000, 5000);
             mainPage = new Main(chd, url);
             mainPage.openLoginForm().logIn("aladdin.for.test+owner@gmail.com", "zxcvbn00");
-            
-            OpenTenderEdit below =mainPage.openCreateMenu(avaliable_for_creating.below)
+
+            OpenTenderEdit belowedit =mainPage.openCreateMenu(avaliable_for_creating.below)
                                     .fillText()
                                     .fillBudget(false)
                                     .fillDate();
 
             IWebElement AddItemButton = bigWait.Until<IWebElement>(d => d.FindElement(By.XPath("//*[contains(@id,'add_procurement_subject')]")));
-            Assert.Pass("URL: "+chd.Url);
+            Assert.Warn("URL: " + chd.Url);
 
-           // ItemsNew r = new ItemsNew();
-           // r.AddNewTenderItem();
+            new ItemsNew(chd).AddNewTenderItem();
+            //new ItemsNew(chd).AddNewTenderItem();
+            belowedit.btnStopEdit.Click();
 
+            OpenTenderView tv = new OpenTenderView(chd);
+            String uaid = tv.publish();
+            Assert.IsNotEmpty(uaid, "Нету ЮАИД , не работает публикация ?");
+            Assert.Pass("UAID: "+ uaid);
 
         }
 

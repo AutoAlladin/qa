@@ -51,7 +51,6 @@ namespace UnitTestProject1.Pages
                 case avaliable_for_creating.below:
                     BelowThreshold.Click();
                     return new OpenTenderEdit(driver);
-                    break;
                 default:
                     return null;
             }

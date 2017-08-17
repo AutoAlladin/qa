@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\OpenTenderView.cs" />
     <Compile Include="Pages\ItemsNew.cs" />
     <Compile Include="Pages\OpenTenderEdit.cs" />
     <Compile Include="Pages\Login.cs" />

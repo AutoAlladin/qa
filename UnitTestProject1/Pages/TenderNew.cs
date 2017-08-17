@@ -55,6 +55,9 @@ namespace UnitTestProject1.Pages
         public IWebElement TenderBidEnd { get; set; }
 
         [FindsBy(How = How.Id, Using = "next_step")]
-        protected IWebElement btnNextStep { get; set; }
+        public IWebElement btnNextStep { get; set; }
+
+        [FindsBy(How = How.Id, Using = "movePurchaseView")]
+        public IWebElement btnStopEdit { get; set; }
     }
 }
