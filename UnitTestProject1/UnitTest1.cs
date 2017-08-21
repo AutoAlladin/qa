@@ -23,9 +23,9 @@ namespace Alladin
         {
             chd = new ChromeDriver();
             chd.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
-            chd.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(7);
+            chd.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(12);
 
-            bigWait = new WebDriverWait(chd, TimeSpan.FromSeconds(60));
+            bigWait = new WebDriverWait(chd, TimeSpan.FromSeconds(120));
         }
 
         //[TestCase("aladdin.for.test+owner@gmail.com", "zxcvbn00", TestName ="AuthorizationOk", Category = "Owner", Description ="ok") ]
@@ -68,7 +68,13 @@ namespace Alladin
             Assert.Warn("URL: " + chd.Url);
 
             new ItemsNew(chd).AddNewTenderItem();
-            //new ItemsNew(chd).AddNewTenderItem();
+
+            for (int s = 1; s <= 100; s++) {
+
+                new ItemsNew(chd).AddNewTenderItem("0"+s.ToString());
+                Assert.Warn("add item " + "0" + s.ToString());
+            } 
+
             belowedit.btnStopEdit.Click();
 
             OpenTenderView tv = new OpenTenderView(chd);

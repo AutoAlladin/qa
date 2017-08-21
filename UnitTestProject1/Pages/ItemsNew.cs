@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace UnitTestProject1.Pages
@@ -42,21 +43,21 @@ namespace UnitTestProject1.Pages
 
         /// <summary>
         /// суффикс ИД  - 00 для новой позии к тендеру
-        ///             - 01 для новой позиции к лоту
+        ///             - 10 для новой позиции к лоту
         /// </summary>
         private String s = "";
 
 
 
-        public void AddNewLotItem() {
-            s = "01";
+        public void AddNewLotItem(String _s="10") {
+            s = _s;
             btnAddLotItem.Click();
             addItem();
             // link to lot;
         }
 
-        public void AddNewTenderItem() {
-            s = "00";
+        public void AddNewTenderItem(String _s="00") {
+            s = _s;
             btnAddTenderItem.Click();
             addItem();
         }
@@ -74,26 +75,28 @@ namespace UnitTestProject1.Pages
 
             bigWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.ClassName("page-loader animated fadeIn")));
             drv.FindElement(By.Id("update_" + s)).Click();
+            Thread.Sleep(4000);
+
+            bigWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.ClassName("toast toast-success")));
 
         }
 
         private void setDeliveryAddress()
         {
             bigWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.ClassName("xdsoft_timepicker active")));
-            TestContext.Out.WriteLine("1");
+
             drv.FindElement(By.XPath("//md-switch[@id='is_delivary_"+s+"']/div[2]/span")).Click();
 
-            TestContext.Out.WriteLine("2");
             new SelectElement(drv.FindElement(By.Id("select_countries" + s))).SelectByText("Україна");
-            TestContext.Out.WriteLine("3");
+
             new SelectElement(drv.FindElement(By.Id("select_regions" + s))).SelectByText("Сумська");
-            TestContext.Out.WriteLine("4");
+
             drv.FindElement(By.Id("zip_code_" + s)).SendKeys("654321987");
             drv.FindElement(By.Id("locality_" + s)).SendKeys("Мушколюбів");
             drv.FindElement(By.Id("street_" + s)).SendKeys("Дрозофіли");
             drv.FindElement(By.Id("latutide_" + s)).SendKeys("45.98775");
             drv.FindElement(By.Id("longitude_" + s)).SendKeys("55.97748");
-            TestContext.Out.WriteLine("5");
+
         }
 
         private void setDeliveryDate()
@@ -105,24 +108,28 @@ namespace UnitTestProject1.Pages
 
         private void setDKKP()
         {
+            bigWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.Id("modDialog")));
+            bigWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.ClassName("modal-backdrop fade")));
             btnOtherK.Click();
             bigWait.Until<IWebElement>(d => d.FindElement(By.Id("search-classifier-text"))).SendKeys("000");
             bigWait.Until(ExpectedConditions.ElementExists(By.XPath("//*[@id='tree']//li[@aria-selected='true']")));
             drv.FindElement(By.Id("add-classifier")).Click();
-
+            bigWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.ClassName("modal-backdrop fade")));
             bigWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.Id("modDialog")));
 
         }
 
         private void setDK015()
         {
+
+            bigWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.Id("modDialog")));
+            bigWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.ClassName("modal-backdrop fade")));
             btnK21.Click();
             bigWait.Until<IWebElement>(d => d.FindElement(By.Id("search-classifier-text"))).SendKeys("30000000-9");
-
             bigWait.Until(ExpectedConditions.ElementExists(By.XPath("//*[@id='tree']//li[@aria-selected='true']")));
-
             drv.FindElement(By.Id("add-classifier")).Click();
             bigWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.Id("modDialog")));
+            bigWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.ClassName("modal-backdrop fade")));
         }
 
         private void fillNomenklatura()
